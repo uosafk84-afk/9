@@ -153,6 +153,19 @@
   .field label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); display: block; margin-bottom: 5px; font-weight: 600; }
   .field-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
   .delete-link { display:none; font-size: 12px; color: var(--pending); background: none; border: none; cursor: pointer; text-decoration: underline; }
+  .order-del-btn {
+    flex: none; width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(239,68,68,.35);
+    background: rgba(239,68,68,.10); color: var(--pending); font-size: 14px; line-height: 1; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;
+  }
+  .order-del-btn:active { transform: scale(0.92); background: rgba(239,68,68,.22); }
+  .order-add-tile {
+    display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px 12px;
+    border: 1.5px dashed rgba(21,151,229,.35); border-radius: var(--r-sm); cursor: pointer;
+    color: var(--primary); font-weight: 700; font-size: 13px; background: rgba(21,151,229,.04);
+    margin-top: 10px;
+  }
+  .order-add-tile:active { transform: scale(0.98); background: rgba(21,151,229,.09); }
   .top-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   #file-input { display: none; }
   .sync-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; box-shadow: 0 0 0 3px rgba(255,255,255,.4); }
@@ -363,7 +376,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import {
   getFirestore, collection, doc, setDoc, onSnapshot,
-  enableIndexedDbPersistence, writeBatch
+  enableIndexedDbPersistence, writeBatch, deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -1047,12 +1060,36 @@ function renderCustomerDetail() {
   const pending = orders.length ? computeOrder(orders[0]).pendingBalance : 0;
   const rows = orders.map((o,i) => {
     const c = computeOrder(o);
-    return `<div class="list-row ${i%2===0?'alt':''}" style="cursor:pointer;align-items:center" onclick="openOrder('${o.id}')"><div><b>${esc(o.date)}</b><div class="muted" style="font-size:12px">${o.status||"Pending"}</div></div><div style="text-align:right"><div class="num">${fmt(c.orderTotal)} AFN</div><div class="pending num">${fmt(Math.max(0,c.pendingBalance))} pending</div></div></div>`;
+    return `<div class="list-row ${i%2===0?'alt':''}" style="cursor:pointer;align-items:center" onclick="openOrder('${o.id}')">
+      <div><b>${esc(o.date)}</b><div class="muted" style="font-size:12px">${o.status||"Pending"}</div></div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="text-align:right"><div class="num">${fmt(c.orderTotal)} AFN</div><div class="pending num">${fmt(Math.max(0,c.pendingBalance))} pending</div></div>
+        <button type="button" class="order-del-btn" title="Delete this order" onclick="event.stopPropagation();deleteOrder('${o.id}')">✕</button>
+      </div>
+    </div>`;
   }).join("");
   return `<div class="row-between"><h1 class="page">${esc(name)}</h1><button class="btn btn-primary" onclick="startNewForCustomer('${esc(name).replace(/'/g,"\\'")}')">+ New Order</button></div><div class="stitch">${"<span></span>".repeat(28)}</div>
   <div class="stat-grid"><div class="stat-card"><div class="stat-label">Orders</div><div class="stat-value">${orders.length}</div></div><div class="stat-card"><div class="stat-label">Total Sales</div><div class="stat-value">${fmt(totalSales)}<span class="unit">AFN</span></div></div><div class="stat-card"><div class="stat-label">Pending</div><div class="stat-value pending">${fmt(Math.max(0,pending))}<span class="unit">AFN</span></div></div></div>
   <div class="list-card" style="margin-top:22px">${rows||`<div class="empty-state"><p>No orders yet for this customer.</p></div>`}</div>
+  <div class="order-add-tile" onclick="startNewForCustomer('${esc(name).replace(/'/g,"\\'")}')">+ Add another order for ${esc(name)}</div>
   <button class="btn btn-ghost" style="margin-top:16px" onclick="setTab('customers')">← Back to Customers</button>`;
+}
+function deleteOrder(id) {
+  const o = state.orders.find((x) => x.id === id);
+  if (!o) return;
+  if (!confirm(`Delete this order for ${o.customerName || "this customer"} dated ${o.date}? This cannot be undone.`)) return;
+  state.orders = state.orders.filter((x) => x.id !== id);
+  saveLocalData();
+  if (state.user) {
+    deleteDoc(doc(db, "users", state.user.uid, "orders", id)).catch((e) => console.error("delete order failed", e));
+  }
+  if (state.tab === "customerDetail" && state.viewingCustomer) {
+    const key = state.viewingCustomer.trim().toLowerCase();
+    const remaining = state.orders.some((x) => (x.customerName || "").trim().toLowerCase() === key);
+    if (!remaining) state.tab = "customers";
+  }
+  render();
+  toast("Order deleted", "warning");
 }
 function deleteCustomer(name) {
   const key = name.trim().toLowerCase();
@@ -1406,7 +1443,7 @@ Object.assign(window, {
   exportData, shareBackup, importData,
   signInUser, signOutUser, openAdmin, closeAdmin, closeAuth, adminBackup, adminExport,
   state, renderMain, render,
-  openPrices, updatePriceField, savePrices, resetPrices, setInventory, deleteCustomer, updateOrderPrice,
+  openPrices, updatePriceField, savePrices, resetPrices, setInventory, deleteCustomer, deleteOrder, updateOrderPrice,
   openMore, closeMore, moreItemClick, adjustInventory, toggleAddProduct, submitAddProduct, addCustomProduct,
   openReceipt, captureAndShare, viewCustomer, startNewForCustomer,
 });
