@@ -21,10 +21,10 @@
     --paper-light: #FFFFFF;
     --paper-deep: #1597E5;
     --silver: #AAB6CC;
-    --rule: rgba(21,151,229,0.16);
-    --glass: rgba(255,255,255,0.45);
-    --glass-strong: rgba(255,255,255,0.72);
-    --glass-blue: rgba(224,245,255,0.55);
+    --rule: rgba(21,151,229,0.18);
+    --glass: rgba(210,240,255,0.30);
+    --glass-strong: rgba(255,255,255,0.55);
+    --glass-blue: rgba(180,230,255,0.35);
     --brass: #1597E5;
     --received: #22C55E;
     --pending: #EF4444;
@@ -46,17 +46,17 @@
   body {
     margin: 0; color: var(--ink); font-family: var(--body-font); min-height:100vh;
     -webkit-font-smoothing: antialiased; position: relative; overflow-x: hidden;
-    background: linear-gradient(165deg, #EAF8FF 0%, #DCF1FF 45%, #CDEBFF 100%);
+    background: linear-gradient(165deg, #DFF5FF 0%, #C7ECFF 40%, #A9DFFB 75%, #8ED2F7 100%);
     background-attachment: fixed;
   }
   /* soft light-through-water blobs */
   body::before, body::after {
-    content: ""; position: fixed; z-index: -1; border-radius: 50%; filter: blur(70px);
-    opacity: 0.55; pointer-events: none;
+    content: ""; position: fixed; z-index: -1; border-radius: 50%; filter: blur(85px);
+    opacity: 0.65; pointer-events: none;
   }
-  body::before { width: 46vw; height: 46vw; top: -14vw; right: -12vw; background: radial-gradient(circle, rgba(125,211,252,.65), rgba(125,211,252,0) 70%); }
-  body::after { width: 40vw; height: 40vw; bottom: -16vw; left: -10vw; background: radial-gradient(circle, rgba(56,189,248,.45), rgba(56,189,248,0) 70%); }
-  header { position: relative; border-bottom: 1px solid var(--rule); padding: 20px 24px 14px; background: var(--glass); backdrop-filter: blur(26px) saturate(180%); -webkit-backdrop-filter: blur(26px) saturate(180%); box-shadow: 0 8px 30px rgba(21,151,229,.08); position: sticky; top: 0; z-index: 40; }
+  body::before { width: 52vw; height: 52vw; top: -16vw; right: -14vw; background: radial-gradient(circle, rgba(125,211,252,.75), rgba(125,211,252,0) 70%); }
+  body::after { width: 46vw; height: 46vw; bottom: -18vw; left: -12vw; background: radial-gradient(circle, rgba(56,189,248,.55), rgba(56,189,248,0) 70%); }
+  header { position: relative; border-bottom: 1px solid var(--rule); padding: 20px 24px 14px; background: var(--glass); backdrop-filter: blur(34px) saturate(200%); -webkit-backdrop-filter: blur(34px) saturate(200%); box-shadow: 0 8px 30px rgba(21,151,229,.10); position: sticky; top: 0; z-index: 40; }
   header::after { content:""; position:absolute; inset:0 0 auto 0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent); }
   header .inner, main { max-width: 960px; margin: 0 auto; }
   .eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--primary); font-weight: 700; }
@@ -65,7 +65,7 @@
   .tab-btn, .btn {
     font-family: var(--body-font); font-size: 13px; letter-spacing: 0.01em; font-weight: 600;
     padding: 7px 14px; border-radius: 999px; cursor: pointer; border: 1px solid var(--rule);
-    background: var(--glass); color: var(--ink); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    background: var(--glass); color: var(--ink); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
   }
   .tab-btn:active, .btn:active { transform: scale(0.96); }
   .tab-btn.active { background: linear-gradient(135deg, var(--secondary), var(--primary)); color: #fff; box-shadow: 0 8px 20px rgba(21,151,229,.35); border-color: transparent; }
@@ -82,10 +82,10 @@
   .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(126px,1fr)); gap: 8px; margin-top: 12px; }
   .stat-card {
     position: relative; overflow: hidden;
-    background: linear-gradient(155deg, rgba(255,255,255,.55), rgba(255,255,255,.22));
-    border: 1px solid rgba(255,255,255,.55); border-radius: var(--r-sm); padding: 10px 12px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 14px 30px rgba(21,151,229,.12);
-    backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
+    background: linear-gradient(155deg, rgba(255,255,255,.40), rgba(200,235,255,.14));
+    border: 1px solid rgba(255,255,255,.50); border-radius: var(--r-sm); padding: 10px 12px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 14px 34px rgba(21,151,229,.16);
+    backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
   }
   .stat-card::before {
     content:""; position:absolute; top:0; left:-20%; width:140%; height:46%;
@@ -107,10 +107,10 @@
   .bar-track { background: rgba(21,151,229,.12); height: 6px; border-radius: 999px; overflow: hidden; }
   .bar-fill { background: linear-gradient(90deg, var(--secondary), var(--primary)); height: 6px; border-radius: 999px; transition: width 0.4s var(--ease); }
   .list-card, .glass-box, .ledger-card {
-    position: relative; border: 1px solid rgba(255,255,255,.55); border-radius: var(--r-md); overflow: hidden;
-    background: linear-gradient(155deg, rgba(255,255,255,.55), rgba(255,255,255,.24));
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 14px 30px rgba(21,151,229,.10);
-    backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
+    position: relative; border: 1px solid rgba(255,255,255,.50); border-radius: var(--r-md); overflow: hidden;
+    background: linear-gradient(155deg, rgba(255,255,255,.40), rgba(200,235,255,.14));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 14px 34px rgba(21,151,229,.14);
+    backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
   }
   .list-row { display: flex; justify-content: space-between; width: 100%; text-align: left; padding: 9px 12px; border: none; font-size: 13px; cursor: pointer; background: transparent; font-family: var(--body-font); color: var(--ink); gap: 8px; }
   .list-row.alt { background: rgba(21,151,229,.045); }
@@ -119,8 +119,9 @@
   .capitalize { text-transform: capitalize; }
   input[type="text"], input[type="date"], input.qty, input.money-input, input.stock-adjust {
     font-family: var(--body-font); font-size: 13px; padding: 7px 10px;
-    border: 1px solid var(--rule); border-radius: var(--r-sm); background: rgba(255,255,255,.55); color: var(--ink);
-    box-shadow: inset 0 1px 3px rgba(21,60,100,.06);
+    border: 1px solid var(--rule); border-radius: var(--r-sm); background: rgba(255,255,255,.38); color: var(--ink);
+    box-shadow: inset 0 1px 3px rgba(21,60,100,.08);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   }
   input.qty, input.money-input { font-family: var(--num-font); width: 78px; text-align: right; padding: 6px 8px; }
   input::placeholder { color: #9FB4C7; }
@@ -136,7 +137,6 @@
   .search-wrap { position: relative; width: 100%; max-width: 340px; margin-bottom: 18px; }
   .search-wrap svg { position:absolute; left:14px; top:50%; transform:translateY(-50%); width:16px; height:16px; color:var(--muted); pointer-events:none; }
   .search-input { width: 100%; max-width: 340px; margin-bottom: 0; border-radius: 999px !important; padding: 11px 16px 11px 38px !important; background: rgba(255,255,255,.55) !important; }
-  .ledger-card { border: 1px solid var(--rule); background: #ffffff; backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; }
   .ledger-row { display: flex; flex-direction: row-reverse; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid var(--rule); background: transparent; }
   .ledger-row.strong { background: rgba(21,151,229,.05); }
   .ledger-row:last-child { border-bottom: none; }
@@ -226,8 +226,8 @@
 
   /* Bottom nav (mobile) */
   #bottom-nav { position: fixed; left: 10px; right: 10px; bottom: 12px; z-index: 60; display: flex; justify-content: space-around; align-items: center;
-    padding: 8px; border-radius: 26px; background: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.65);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 16px 34px rgba(21,151,229,.20); backdrop-filter: blur(22px) saturate(170%); -webkit-backdrop-filter: blur(22px) saturate(170%); }
+    padding: 8px; border-radius: 26px; background: rgba(255,255,255,.38); border: 1px solid rgba(255,255,255,.55);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 16px 40px rgba(21,151,229,.24); backdrop-filter: blur(30px) saturate(190%); -webkit-backdrop-filter: blur(30px) saturate(190%); }
   @media (min-width: 900px) { #bottom-nav { display: none; } header .tabs { display: flex; } }
   @media (max-width: 899px) { header .tabs { display: none; } main { padding-bottom: 108px; } }
   .nav-btn { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; padding:8px 4px; border:none; background:none; cursor:pointer; color: var(--muted); border-radius: 16px; }
@@ -238,7 +238,7 @@
 
   /* More sheet */
   #more-sheet-backdrop { position:fixed; inset:0; z-index:90; background:rgba(16,42,67,.30); backdrop-filter:blur(6px); display:none; align-items:flex-end; justify-content:center; }
-  #more-sheet { width:100%; max-width:480px; background: linear-gradient(155deg, rgba(255,255,255,.85), rgba(240,250,255,.78)); border:1px solid rgba(255,255,255,.7); border-radius: 26px 26px 0 0; padding: 18px 18px calc(env(safe-area-inset-bottom,0px) + 18px); box-shadow: 0 -14px 40px rgba(21,151,229,.22); backdrop-filter: blur(24px) saturate(170%); animation: sheetUp 0.25s var(--ease); }
+  #more-sheet { width:100%; max-width:480px; background: linear-gradient(155deg, rgba(255,255,255,.55), rgba(210,240,255,.35)); border:1px solid rgba(255,255,255,.55); border-radius: 26px 26px 0 0; padding: 18px 18px calc(env(safe-area-inset-bottom,0px) + 18px); box-shadow: 0 -14px 44px rgba(21,151,229,.26); backdrop-filter: blur(30px) saturate(190%); animation: sheetUp 0.25s var(--ease); }
   #more-sheet h2 { margin:0 0 12px; font-family: var(--display-font); font-size:16px; }
   .more-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:10px; }
   .more-item { display:flex; flex-direction:column; align-items:center; gap:4px; padding:9px 5px; border-radius:14px; border:1px solid var(--rule); background:var(--glass); cursor:pointer; color:var(--ink); font-size:11px; font-weight:600; }
@@ -279,7 +279,7 @@
 
 <div id="loading-screen">
   <div class="loading-mark">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.32 0z"/></svg>
+    <img src="icon-192.png" alt="Spinghar" style="width:100%;height:100%;object-fit:cover;border-radius:20px" />
   </div>
   <div class="loading-name">Spinghar Orders</div>
   <div class="loading-dots"><span></span><span></span><span></span></div>
@@ -869,16 +869,20 @@ function renderTabs() {
 function renderBottomNav() {
   const nav = document.getElementById("bottom-nav");
   if (!nav) return;
+  const hiddenOn = ["form", "receipt"];
+  if (hiddenOn.includes(state.tab)) { nav.style.display = "none"; return; }
+  nav.style.display = "";
   const primaryTabs = ["dashboard", "orders", "customers", "inventory"];
+  const activeTab = state.tab === "customerDetail" ? "customers" : state.tab;
   const items = [
     { tab: "dashboard", label: "Home", icon: ICONS.dashboard },
     { tab: "orders", label: "Orders", icon: ICONS.orders },
     { tab: "customers", label: "Customers", icon: ICONS.customers },
     { tab: "inventory", label: "Inventory", icon: ICONS.inventory },
   ];
-  const isMoreActive = !primaryTabs.includes(state.tab);
+  const isMoreActive = !primaryTabs.includes(activeTab);
   nav.innerHTML = items.map((it) => `
-    <button class="nav-btn ${state.tab === it.tab ? "active" : ""}" onclick="setTab('${it.tab}')">${it.icon}<span>${it.label}</span></button>
+    <button class="nav-btn ${activeTab === it.tab ? "active" : ""}" onclick="setTab('${it.tab}')">${it.icon}<span>${it.label}</span></button>
   `).join("") + `
     <button class="nav-btn ${isMoreActive ? "active" : ""}" onclick="openMore()">${ICONS.more}<span>More</span></button>
   `;
@@ -1013,7 +1017,39 @@ function renderCustomers() {
   const customers=[...map.values()].sort((a,b)=>a.name.localeCompare(b.name));
   return `<div class="row-between"><h1 class="page">Customers</h1><button class="btn btn-primary" onclick="startNew()">+ New Order</button></div><div class="stitch">${"<span></span>".repeat(28)}</div>
   <div class="stat-grid"><div class="stat-card"><div class="stat-label">Customers</div><div class="stat-value">${customers.length}</div></div><div class="stat-card"><div class="stat-label">Customer Sales</div><div class="stat-value">${fmt(customers.reduce((s,c)=>s+c.sales,0))}<span class="unit">AFN</span></div></div><div class="stat-card"><div class="stat-label">Outstanding</div><div class="stat-value pending">${fmt(customers.reduce((s,c)=>s+Math.max(0,c.pending),0))}<span class="unit">AFN</span></div></div></div>
-  <div class="list-card" style="margin-top:22px">${customers.length?customers.map((c,i)=>`<div class="list-row ${i%2===0?'alt':''}" style="cursor:default;align-items:center"><div><b>${esc(c.name)}</b><div class="muted" style="font-size:12px">${esc(c.phone||"No phone")} · ${esc(c.address||"No address")}</div></div><div style="text-align:right;display:flex;align-items:center;gap:14px"><div><div>${c.orders} order${c.orders===1?'':'s'}</div><div class="num">${fmt(c.sales)} AFN</div><div class="pending num">${fmt(Math.max(0,c.pending))} pending</div></div><button class="delete-link" style="display:inline" onclick="deleteCustomer('${esc(c.name).replace(/'/g,"\\'")}')">Delete</button></div></div>`).join(""):`<div class="empty-state"><div class="empty-icon">${ICONS.emptyCustomers}</div><p>Customers will appear automatically when orders are added.</p></div>`}</div>`;
+  <div class="list-card" style="margin-top:22px">${customers.length?customers.map((c,i)=>`<div class="list-row ${i%2===0?'alt':''}" style="cursor:pointer;align-items:center" onclick="viewCustomer('${esc(c.name).replace(/'/g,"\\'")}')"><div><b>${esc(c.name)}</b><div class="muted" style="font-size:12px">${esc(c.phone||"No phone")} · ${esc(c.address||"No address")}</div></div><div style="text-align:right;display:flex;align-items:center;gap:14px"><div><div>${c.orders} order${c.orders===1?'':'s'}</div><div class="num">${fmt(c.sales)} AFN</div><div class="pending num">${fmt(Math.max(0,c.pending))} pending</div></div><button class="delete-link" style="display:inline" onclick="event.stopPropagation();deleteCustomer('${esc(c.name).replace(/'/g,"\\'")}')">Delete</button></div></div>`).join(""):`<div class="empty-state"><div class="empty-icon">${ICONS.emptyCustomers}</div><p>Customers will appear automatically when orders are added.</p></div>`}</div>`;
+}
+
+function viewCustomer(name) {
+  state.viewingCustomer = name;
+  state.tab = "customerDetail";
+  render();
+}
+function startNewForCustomer(name) {
+  const unitPrices = {};
+  effectiveCatalog().forEach((p) => { unitPrices[p.key] = p.price; });
+  const prior = [...state.orders].filter(o => (o.customerName||"").trim().toLowerCase() === (name||"").trim().toLowerCase()).sort((a,b)=>b.date.localeCompare(a.date))[0];
+  state.editingOrder = {
+    id: uid(), isNew: true, customerName: name, customerPhone: prior?prior.customerPhone||"":"", customerAddress: prior?prior.customerAddress||"":"", date: todayISO(), status: "Pending", deliveryStatus: "Not dispatched",
+    items: emptyItems(), previousBalance: prior?computeOrder(prior).pendingBalance:0, amountReceived: "", cashOut: "", unitPrices,
+  };
+  state.touchedPrev = false;
+  state.tab = "form";
+  render();
+}
+function renderCustomerDetail() {
+  const name = state.viewingCustomer || "";
+  const orders = [...state.orders].filter(o => (o.customerName||"").trim().toLowerCase() === name.trim().toLowerCase()).sort((a,b)=>b.date.localeCompare(a.date));
+  const totalSales = orders.reduce((s,o)=>s+computeOrder(o).orderTotal,0);
+  const pending = orders.length ? computeOrder(orders[0]).pendingBalance : 0;
+  const rows = orders.map((o,i) => {
+    const c = computeOrder(o);
+    return `<div class="list-row ${i%2===0?'alt':''}" style="cursor:pointer;align-items:center" onclick="openOrder('${o.id}')"><div><b>${esc(o.date)}</b><div class="muted" style="font-size:12px">${o.status||"Pending"}</div></div><div style="text-align:right"><div class="num">${fmt(c.orderTotal)} AFN</div><div class="pending num">${fmt(Math.max(0,c.pendingBalance))} pending</div></div></div>`;
+  }).join("");
+  return `<div class="row-between"><h1 class="page">${esc(name)}</h1><button class="btn btn-primary" onclick="startNewForCustomer('${esc(name).replace(/'/g,"\\'")}')">+ New Order</button></div><div class="stitch">${"<span></span>".repeat(28)}</div>
+  <div class="stat-grid"><div class="stat-card"><div class="stat-label">Orders</div><div class="stat-value">${orders.length}</div></div><div class="stat-card"><div class="stat-label">Total Sales</div><div class="stat-value">${fmt(totalSales)}<span class="unit">AFN</span></div></div><div class="stat-card"><div class="stat-label">Pending</div><div class="stat-value pending">${fmt(Math.max(0,pending))}<span class="unit">AFN</span></div></div></div>
+  <div class="list-card" style="margin-top:22px">${rows||`<div class="empty-state"><p>No orders yet for this customer.</p></div>`}</div>
+  <button class="btn btn-ghost" style="margin-top:16px" onclick="setTab('customers')">← Back to Customers</button>`;
 }
 function deleteCustomer(name) {
   const key = name.trim().toLowerCase();
@@ -1341,7 +1377,6 @@ function renderForm() {
             <input id="field-amountReceived" class="money-input" value="${esc(f.amountReceived)}" oninput="updateMoneyField('amountReceived', this.value)" /></div>
           <div class="ledger-row strong"><span class="ledger-label">مجموعه بقايا</span>${moneySpan(computed.pendingBalance, computed.pendingBalance > 0 ? "pending" : "received")}</div>
         </div>
-        ${!state.touchedPrev && f.customerName.trim() ? `<p class="hint">پخوانی بیلانس د ${esc(f.customerName)} وروستي آرډر څخه په اتومات ډول ډک شو. که اړتیا وي سم یې کړئ.</p>` : ""}
       </div>
     </div>
 
@@ -1369,6 +1404,7 @@ function renderMain() {
   if (state.tab === "dashboard") main.innerHTML = renderDashboard();
   else if (state.tab === "orders") main.innerHTML = renderOrdersList();
   else if (state.tab === "customers") main.innerHTML = renderCustomers();
+  else if (state.tab === "customerDetail") main.innerHTML = renderCustomerDetail();
   else if (state.tab === "inventory") main.innerHTML = renderInventory();
   else if (state.tab === "payments") main.innerHTML = renderPayments();
   else if (state.tab === "reports") main.innerHTML = renderReports();
@@ -1437,7 +1473,7 @@ Object.assign(window, {
   state, renderMain, render,
   openPrices, updatePriceField, savePrices, resetPrices, setInventory, deleteCustomer, updateOrderPrice,
   openMore, closeMore, moreItemClick, adjustInventory, toggleAddProduct, submitAddProduct, addCustomProduct,
-  openReceipt, captureAndShare,
+  openReceipt, captureAndShare, viewCustomer, startNewForCustomer,
 });
 </script>
 </body>

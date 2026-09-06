@@ -1,4 +1,4 @@
-const CACHE_NAME = "spinghar-orders-cache-v9";
+const CACHE_NAME = "spinghar-orders-cache-v10";
 const ASSETS = [
   "./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png",
   "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js",
