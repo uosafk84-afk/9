@@ -906,12 +906,12 @@ function buildReceiptCardInner(order, c) {
       </tbody>
     </table>
     <div class="receipt-divider"></div>
-    <div class="receipt-row"><span dir="rtl">اوسنۍ مجموعه</span><span class="num">${fmt(c.orderTotal)} AFN</span></div>
-    <div class="receipt-row"><span dir="rtl">زړه بقايا</span><span class="num">${fmt(c.previousBalance)} AFN</span></div>
-    <div class="receipt-row strong"><span dir="rtl">ټوټل /زړه او نوی</span><span class="num">${fmt(c.totalDue)} AFN</span></div>
-    <div class="receipt-row"><span dir="rtl">رسید</span><span class="num">${fmt(c.amountReceived)} AFN</span></div>
+    <div class="receipt-row" dir="rtl"><span>اوسنۍ مجموعه</span><span class="num">${fmt(c.orderTotal)} AFN</span></div>
+    <div class="receipt-row" dir="rtl"><span>زړه بقايا</span><span class="num">${fmt(c.previousBalance)} AFN</span></div>
+    <div class="receipt-row strong" dir="rtl"><span>ټوټل /زړه او نوی</span><span class="num">${fmt(c.totalDue)} AFN</span></div>
+    <div class="receipt-row" dir="rtl"><span>رسید</span><span class="num">${fmt(c.amountReceived)} AFN</span></div>
     ${c.cashOut ? `<div class="receipt-row"><span>Cash Out</span><span class="num">${fmt(c.cashOut)} AFN</span></div>` : ""}
-    <div class="receipt-row strong ${c.pendingBalance > 0 ? "pending" : "received"}"><span dir="rtl">مجموعه بقايا</span><span class="num">${fmt(c.pendingBalance)} AFN</span></div>
+    <div class="receipt-row strong ${c.pendingBalance > 0 ? "pending" : "received"}" dir="rtl"><span>مجموعه بقايا</span><span class="num">${fmt(c.pendingBalance)} AFN</span></div>
     <div class="receipt-divider"></div>
     <div class="receipt-footer">Thank you for your business</div>
   `;

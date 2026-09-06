@@ -1,4 +1,4 @@
-const CACHE_NAME = "spinghar-orders-cache-v8";
+const CACHE_NAME = "spinghar-orders-cache-v9";
 const ASSETS = [
   "./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png",
   "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js",
@@ -24,6 +24,21 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  const isPage = event.request.mode === "navigate" || event.request.url.endsWith("index.html") || event.request.url.endsWith("/");
+  if (isPage) {
+    // Network-first for the app page itself, so new deploys always show up immediately.
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+  // Cache-first for static assets (icons, libraries) that rarely change.
   event.respondWith(
     caches.match(event.request).then((cached) => {
       return (
