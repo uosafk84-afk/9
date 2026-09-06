@@ -1028,7 +1028,7 @@ function renderCustomers() {
     const key = (o.customerName || "").trim().toLowerCase();
     if (!key) return;
     if (!map.has(key)) map.set(key, { name:o.customerName, phone:o.customerPhone||"", address:o.customerAddress||"", orders:0, sales:0, pending:0 });
-    const c = map.get(key); const x = computeOrder(o); c.orders++; c.sales += x.orderTotal; c.pending = x.pendingBalance; if (o.customerPhone) c.phone=o.customerPhone; if (o.customerAddress) c.address=o.customerAddress;
+    const c = map.get(key); const x = computeOrder(o); c.orders++; c.sales += x.orderTotal; c.pending += Math.max(0, x.pendingBalance); if (o.customerPhone) c.phone=o.customerPhone; if (o.customerAddress) c.address=o.customerAddress;
   });
   const customers=[...map.values()].sort((a,b)=>a.name.localeCompare(b.name));
   return `<div class="row-between"><h1 class="page">Customers</h1><button class="btn btn-primary" onclick="startNew()">+ New Order</button></div><div class="stitch">${"<span></span>".repeat(28)}</div>
@@ -1057,7 +1057,7 @@ function renderCustomerDetail() {
   const name = state.viewingCustomer || "";
   const orders = [...state.orders].filter(o => (o.customerName||"").trim().toLowerCase() === name.trim().toLowerCase()).sort((a,b)=>b.date.localeCompare(a.date));
   const totalSales = orders.reduce((s,o)=>s+computeOrder(o).orderTotal,0);
-  const pending = orders.length ? computeOrder(orders[0]).pendingBalance : 0;
+  const pending = orders.reduce((s, o) => s + Math.max(0, computeOrder(o).pendingBalance), 0);
   const rows = orders.map((o,i) => {
     const c = computeOrder(o);
     return `<div class="list-row ${i%2===0?'alt':''}" style="cursor:pointer;align-items:center" onclick="openOrder('${o.id}')">
