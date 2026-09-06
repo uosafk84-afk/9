@@ -21,10 +21,10 @@
     --paper-light: #FFFFFF;
     --paper-deep: #1597E5;
     --silver: #AAB6CC;
-    --rule: rgba(21,151,229,0.18);
-    --glass: rgba(210,240,255,0.30);
-    --glass-strong: rgba(255,255,255,0.55);
-    --glass-blue: rgba(180,230,255,0.35);
+    --rule: rgba(21,151,229,0.16);
+    --glass: rgba(255,255,255,0.42);
+    --glass-strong: rgba(255,255,255,0.68);
+    --glass-blue: rgba(220,245,255,0.40);
     --brass: #1597E5;
     --received: #22C55E;
     --pending: #EF4444;
@@ -46,16 +46,16 @@
   body {
     margin: 0; color: var(--ink); font-family: var(--body-font); min-height:100vh;
     -webkit-font-smoothing: antialiased; position: relative; overflow-x: hidden;
-    background: linear-gradient(165deg, #DFF5FF 0%, #C7ECFF 40%, #A9DFFB 75%, #8ED2F7 100%);
+    background: linear-gradient(165deg, #F5FCFF 0%, #E9F8FF 45%, #DBF1FF 100%);
     background-attachment: fixed;
   }
   /* soft light-through-water blobs */
   body::before, body::after {
-    content: ""; position: fixed; z-index: -1; border-radius: 50%; filter: blur(85px);
-    opacity: 0.65; pointer-events: none;
+    content: ""; position: fixed; z-index: -1; border-radius: 50%; filter: blur(75px);
+    opacity: 0.40; pointer-events: none;
   }
-  body::before { width: 52vw; height: 52vw; top: -16vw; right: -14vw; background: radial-gradient(circle, rgba(125,211,252,.75), rgba(125,211,252,0) 70%); }
-  body::after { width: 46vw; height: 46vw; bottom: -18vw; left: -12vw; background: radial-gradient(circle, rgba(56,189,248,.55), rgba(56,189,248,0) 70%); }
+  body::before { width: 46vw; height: 46vw; top: -14vw; right: -12vw; background: radial-gradient(circle, rgba(125,211,252,.65), rgba(125,211,252,0) 70%); }
+  body::after { width: 40vw; height: 40vw; bottom: -16vw; left: -10vw; background: radial-gradient(circle, rgba(56,189,248,.45), rgba(56,189,248,0) 70%); }
   header { position: relative; border-bottom: 1px solid var(--rule); padding: 20px 24px 14px; background: var(--glass); backdrop-filter: blur(34px) saturate(200%); -webkit-backdrop-filter: blur(34px) saturate(200%); box-shadow: 0 8px 30px rgba(21,151,229,.10); position: sticky; top: 0; z-index: 40; }
   header::after { content:""; position:absolute; inset:0 0 auto 0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent); }
   header .inner, main { max-width: 960px; margin: 0 auto; }
@@ -68,6 +68,7 @@
     background: var(--glass); color: var(--ink); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
   }
   .tab-btn:active, .btn:active { transform: scale(0.96); }
+  .btn svg { width:15px; height:15px; vertical-align:-3px; margin-right:2px; }
   .tab-btn.active { background: linear-gradient(135deg, var(--secondary), var(--primary)); color: #fff; box-shadow: 0 8px 20px rgba(21,151,229,.35); border-color: transparent; }
   .btn-primary { background: linear-gradient(135deg, var(--secondary), var(--primary)); color: #fff; border: none; font-weight: 700; box-shadow: 0 8px 20px rgba(21,151,229,.32); position: relative; overflow: hidden; }
   .btn-primary::after { content:""; position:absolute; inset:0; background:linear-gradient(120deg,rgba(255,255,255,.35),transparent 45%); pointer-events:none; }
@@ -80,9 +81,12 @@
   .row-between { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; }
   .stitch { display: none; }
   .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(126px,1fr)); gap: 8px; margin-top: 12px; }
+  .dash-hero { display:flex; flex-direction:column; align-items:center; text-align:center; padding: 14vh 20px 10vh; }
+  .dash-hero-mark { width:96px; height:96px; border-radius:26px; overflow:hidden; box-shadow: 0 18px 40px rgba(21,151,229,.30), inset 0 1px 0 rgba(255,255,255,.7); }
+  .dash-hero-mark img { width:100%; height:100%; object-fit:cover; display:block; }
   .stat-card {
     position: relative; overflow: hidden;
-    background: linear-gradient(155deg, rgba(255,255,255,.40), rgba(200,235,255,.14));
+    background: linear-gradient(155deg, rgba(255,255,255,.40), rgba(230,248,255,.20));
     border: 1px solid rgba(255,255,255,.50); border-radius: var(--r-sm); padding: 10px 12px;
     box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 14px 34px rgba(21,151,229,.16);
     backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -108,7 +112,7 @@
   .bar-fill { background: linear-gradient(90deg, var(--secondary), var(--primary)); height: 6px; border-radius: 999px; transition: width 0.4s var(--ease); }
   .list-card, .glass-box, .ledger-card {
     position: relative; border: 1px solid rgba(255,255,255,.50); border-radius: var(--r-md); overflow: hidden;
-    background: linear-gradient(155deg, rgba(255,255,255,.40), rgba(200,235,255,.14));
+    background: linear-gradient(155deg, rgba(255,255,255,.40), rgba(230,248,255,.20));
     box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 14px 34px rgba(21,151,229,.14);
     backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
   }
@@ -929,7 +933,7 @@ function renderReceipt() {
   return `
     <div class="row-between">
       <button class="btn btn-ghost" onclick="setTab('orders')">← Back</button>
-      <button class="btn btn-primary" onclick="captureAndShare('receipt-card', '${o.id}')">${ICONS.camera} Screenshot &amp; Share</button>
+      <button class="btn btn-primary" onclick="captureAndShare('receipt-card', '${o.id}')">📷 Screenshot &amp; Share</button>
     </div>
     <div style="display:flex;justify-content:center;margin-top:16px">
       <div id="receipt-card" class="receipt-card">${buildReceiptCardInner(o, c)}</div>
@@ -1178,79 +1182,12 @@ function renderReports(){
 }
 
 function renderDashboard() {
-  let sales = 0, receivedTotal = 0, cashOutTotal = 0;
-  const byCustomer = new Map();
-  state.orders.forEach((o) => {
-    const c = computeOrder(o);
-    sales += c.orderTotal; receivedTotal += c.amountReceived; cashOutTotal += c.cashOut;
-    const key = o.customerName.trim().toLowerCase();
-    const prev = byCustomer.get(key);
-    if (!prev || o.date > prev.date) byCustomer.set(key, { date: o.date, pending: c.pendingBalance, name: o.customerName });
-  });
-  let pendingTotal = 0;
-  byCustomer.forEach((v) => (pendingTotal += v.pending));
-
-  const productTotals = effectiveCatalog().map((p) => {
-    let qty = 0, amount = 0;
-    state.orders.forEach((o) => { const q = Number(o.items[p.key]) || 0; qty += q; amount += q * p.price; });
-    return { ...p, qty, amount };
-  }).filter((p) => p.qty > 0);
-  const maxAmount = Math.max(1, ...productTotals.map((p) => p.amount));
-
-  const recentOrders = [...state.orders].sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 6);
-  const owing = [...byCustomer.values()].filter((v) => v.pending > 0).sort((a, b) => b.pending - a.pending);
-
-  const statCard = (label, value, tone, icon) => `
-    <div class="stat-card">
-      <div class="stat-icon">${icon}</div>
-      <div class="stat-label">${label}</div>
-      <div class="stat-value ${tone === "pending" ? "pending" : tone === "received" ? "received" : ""}">${moneySpan(value, tone)}<span class="unit">AFN</span></div>
-    </div>`;
-
   return `
-    <div class="row-between">
-      <h1 class="page">Spinghar Orders — Overview</h1>
+    <div class="dash-hero">
+      <div class="dash-hero-mark"><img src="icon-192.png" alt="Spinghar" /></div>
+      <h1 class="page" style="margin-top:14px">Spinghar Orders</h1>
+      <p class="muted" style="margin:6px 0 26px">Start a new order to get going.</p>
       <button class="btn btn-primary" onclick="startNew()">+ New Order</button>
-    </div>
-    <div class="stitch">${"<span></span>".repeat(28)}</div>
-    <div class="stat-grid">
-      ${statCard("Total Sales", sales, null, ICONS.sales)}
-      ${statCard("Cash Received", receivedTotal, "received", ICONS.cash)}
-      ${statCard("Cash Out", cashOutTotal, "pending", ICONS.cash)}
-      ${statCard("Outstanding (Pending)", pendingTotal, "pending", ICONS.pending)}
-    </div>
-    <div class="cols">
-      <div class="col">
-        <h2 class="section">Product Totals</h2>
-        ${productTotals.length === 0 ? `<p class="muted">No orders recorded yet.</p>` :
-          productTotals.map((p) => `
-            <div class="bar-row">
-              <div class="bar-label"><span>${esc(p.product)} ${p.size !== "-" ? `<span class="muted">· ${esc(p.size)}</span>` : ""}</span>
-              <span class="num">${p.qty} pcs · ${fmt(p.amount)} AFN</span></div>
-              <div class="bar-track"><div class="bar-fill" style="width:${(p.amount / maxAmount) * 100}%"></div></div>
-            </div>`).join("")}
-        <h2 class="section" style="margin-top:26px">Who Owes Money</h2>
-        ${owing.length === 0 ? `<div class="empty-state glass-box"><div class="empty-icon">${ICONS.emptyMoney}</div><p>Nobody has an outstanding balance.</p></div>` : `
-          <div class="list-card">
-            ${owing.map((c, i) => `
-              <div class="list-row ${i % 2 === 0 ? "alt" : ""}" style="cursor:default">
-                <span class="capitalize">${esc(c.name)}</span>${moneySpan(c.pending, "pending")}
-              </div>`).join("")}
-          </div>`}
-      </div>
-      <div class="col">
-        <h2 class="section">Recent Orders</h2>
-        ${recentOrders.length === 0 ? `<div class="empty-state glass-box"><div class="empty-icon">${ICONS.emptyOrders}</div><p>Nothing recorded yet — tap "New Order" to add your first entry.</p></div>` : `
-          <div class="list-card">
-            ${recentOrders.map((o, i) => {
-              const c = computeOrder(o);
-              return `<div class="list-row ${i % 2 === 0 ? "alt" : ""}" onclick="openOrder('${o.id}')">
-                <span><span class="capitalize" style="font-weight:600">${esc(o.customerName || "Unnamed")}</span>
-                <span class="muted" style="margin-left:8px;font-size:12px">${esc(o.date)}</span></span>
-                <span class="num">${fmt(c.orderTotal)} AFN</span></div>`;
-            }).join("")}
-          </div>`}
-      </div>
     </div>
   `;
 }
@@ -1367,7 +1304,6 @@ function renderForm() {
 
     <div class="cols" style="margin-top:0">
       <div class="col">
-        <h2 class="section">د تادیاتو لیجر</h2>
         <div class="ledger-card">
           <div class="ledger-row"><span class="ledger-label">زړه بقايا</span>
             <input id="field-previousBalance" class="money-input" value="${esc(f.previousBalance)}" oninput="updatePrevBalance(this.value)" /></div>
