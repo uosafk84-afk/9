@@ -1,15 +1,15 @@
 {
-  "name": "Spinghar Orders",
-  "short_name": "Spinghar Orders",
-  "description": "Track daily customer orders, payments, and pending balances.",
+  "name": "STAR SHOP",
+  "short_name": "STAR SHOP",
+  "description": "Daily sales, pricing and profit tracker",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#0872D8",
-  "theme_color": "#1677E8",
+  "background_color": "#023e5e",
+  "theme_color": "#023e5e",
+  "orientation": "portrait-primary",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
   ]
 }

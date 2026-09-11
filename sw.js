@@ -1,56 +1,37 @@
-const CACHE_NAME = "spinghar-orders-cache-v14";
+const CACHE = 'star-shop-v23';
 const ASSETS = [
-  "./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png",
-  "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js",
-  "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js",
-  "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js",
-  "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
+  './', './index.html', './manifest.json', './icon-192.png', './icon-512.png',
+  'https://cdnjs.cloudflare.com/ajax/libs/firebase/12.16.0/firebase-app-compat.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/firebase/12.16.0/firebase-firestore-compat.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'
 ];
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
-  );
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => Promise.all(
+    ASSETS.map(url => fetch(url, {mode:'cors'}).then(res => res.ok ? c.put(url, res) : null).catch(()=>{}))
+  )));
   self.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
   );
   self.clients.claim();
 });
 
-self.addEventListener("fetch", (event) => {
-  const isPage = event.request.mode === "navigate" || event.request.url.endsWith("index.html") || event.request.url.endsWith("/");
-  if (isPage) {
-    // Network-first for the app page itself, so new deploys always show up immediately.
-    event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
-    return;
-  }
-  // Cache-first for static assets (icons, libraries) that rarely change.
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      return (
-        cached ||
-        fetch(event.request)
-          .then((response) => {
-            const copy = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-            return response;
-          })
-          .catch(() => cached)
-      );
+self.addEventListener('fetch', e => {
+  if (e.request.method !== 'GET') return;
+  e.respondWith(
+    caches.match(e.request).then(cached => {
+      const fetchPromise = fetch(e.request).then(res => {
+        if (res && res.status === 200) {
+          const clone = res.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone));
+        }
+        return res;
+      }).catch(() => cached);
+      return cached || fetchPromise;
     })
   );
 });
